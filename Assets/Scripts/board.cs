@@ -410,8 +410,8 @@ public class board : MonoBehaviour
                     return false;
                 }
             }
-        
 
+        atualTexto("Muito Bem!");
         return true;
     }
 
