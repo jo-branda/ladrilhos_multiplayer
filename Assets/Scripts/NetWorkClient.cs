@@ -21,6 +21,9 @@ public class NetWorkClient : SocketIOComponent
     public bool Iswinner;
     [SerializeField]
     public string endReason;
+
+    public AudioSource source_;
+    public AudioClip notif_clip;
     public override void Start()
     {
         base.Start();
@@ -42,6 +45,7 @@ public class NetWorkClient : SocketIOComponent
             {
                 this.myTurn = true;
                 Debug.Log("My turn");
+                this.source_.PlayOneShot(this.notif_clip);
             }
             else
             {
