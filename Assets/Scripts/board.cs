@@ -298,20 +298,20 @@ public class board : MonoBehaviour
     {
         if (this.pecaSelecionada == A)
         {
-            Debug.Log("Selecione uma peça");
+            atualTexto("Selecione uma peça");
             return;
         }
 
         // Out of bounds
         if (OffBoardPosition(row, column))
         {
-            Debug.Log ("Fora do tabuleiro");
+            atualTexto("Fora do tabuleiro");
             return;
         }
         // Piece Already in
         if (_board[row,column] != null)
         {
-            Debug.Log("Já contém uma peça");
+            atualTexto("Já contém uma peça");
             return;
         }
         
@@ -334,19 +334,19 @@ public class board : MonoBehaviour
     {
         if (this.pecaSelecionada == A)
         {
-            Debug.Log("Selecione uma peça");
+            atualTexto("Selecione uma peça");
             return false;
         }
 
         if (OffBoardPosition(row, column))
         {
-            Debug.Log("Fora do tabuleiro");
+            atualTexto("Fora do tabuleiro");
             return false; // Is out of bounds
         }
 
         if (_board[row,column] != null)
         {
-            Debug.Log("Já contém uma peça");
+            atualTexto("Já contém uma peça");
             return false; // Is a piece in that position
         }
 
@@ -360,7 +360,7 @@ public class board : MonoBehaviour
 
         if (!possibleHorizontal && !possibleVertical)
         {
-            Debug.Log("Não combina a peca!");
+            atualTexto("Não combina a peca!");
             return false;
         }
 
