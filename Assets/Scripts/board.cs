@@ -83,6 +83,8 @@ public class board : MonoBehaviour
     public Text txt_Selecionada5;
     public Text txt_Selecionada6;
 
+    public GameObject popup;
+
     public int ColCount
     {
         get;
@@ -446,6 +448,7 @@ public class board : MonoBehaviour
         nt.Emit("passa_vez");
         tiraNovasPecas();
     }
+
     public void sairJogo()
     {
         Debug.Log("Sair");
@@ -453,6 +456,17 @@ public class board : MonoBehaviour
         sockConn.disconnect();
         SceneManager.LoadScene("Menu");
     }
+
+    public void openPopup()
+    {
+        popup.SetActive(true);
+    }
+
+    public void closePopup()
+    {
+        popup.SetActive(false);
+    }
+
     public void sendData(int x, int y, string n)
     {
         InfoPeca newTile = new InfoPeca(x, y, n);
