@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b6481ea27bc2884aa4e8b6111867571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: ws://127.0.0.1:4321/socket.io/?EIO=4&transport=websocket
+  url: ws://10.1.186.43:4321/socket.io/?EIO=4&transport=websocket
   autoConnect: 1
   reconnectDelay: 5
   ackExpirationTime: 1800
@@ -568,6 +568,7 @@ MonoBehaviour:
   endReason: 
   source_: {fileID: 928895422}
   notif_clip: {fileID: 8300000, guid: 53e6630128ccc314f95ec83b43fd289b, type: 3}
+  sons: 0
 --- !u!4 &627873326
 Transform:
   m_ObjectHideFlags: 0
@@ -668,6 +669,9 @@ MonoBehaviour:
   popup: {fileID: 1607813774}
   source_: {fileID: 928895422}
   place_clip: {fileID: 8300000, guid: 9b2519de069e2a442ad2ce5c103003c3, type: 3}
+  sons: 0
+  musica: 0
+  dicas: 0
 --- !u!4 &757166001
 Transform:
   m_ObjectHideFlags: 0
