@@ -84,7 +84,8 @@ public class board : MonoBehaviour
     public Text txt_Selecionada6;
 
     public GameObject popup;
-
+    public AudioSource source_;
+    public AudioClip place_clip;
     public int ColCount
     {
         get;
@@ -263,6 +264,8 @@ public class board : MonoBehaviour
             sendData(_x, _y, t.name);
             getTilebyName("A");
             limpaAtualSelecionada();
+            atualTexto("Muito Bem!");
+            this.source_.PlayOneShot(this.place_clip);
         }   
 
     }
@@ -413,7 +416,7 @@ public class board : MonoBehaviour
                 }
             }
 
-        atualTexto("Muito Bem!");
+        
         return true;
     }
 
