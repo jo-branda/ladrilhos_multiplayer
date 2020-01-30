@@ -9,12 +9,14 @@ public class options : MonoBehaviour
     private int musica;
     private int dicas;
 
-    public GameObject btnSons;
-    public GameObject btnMusica;
-    public GameObject btnDicas;
+    public Button btnSons;
+    public Button btnMusica;
+    public Button btnDicas;
 
-    public Image on;
-    public Image off;
+    public Sprite on;
+    public Sprite off;
+
+    public GameObject popupOptions;
 
     // Start is called before the first frame update
     void Start()
@@ -28,42 +30,74 @@ public class options : MonoBehaviour
         
     }
 
-    public void turnOnOffS(int i)
+    public void changemenuscene(string scenename)
+    {
+        Application.LoadLevel(scenename);
+    }
+
+    public void openPopup()
+    {
+        popupOptions.SetActive(true);
+    }
+
+    public void closePopup()
+    {
+        popupOptions.SetActive(false);
+    }
+
+    public void turnOnOffS()
     {
         //Se for zero está desligado e viceversa
-        if(i == 0)
+        if(this.sons == 0)
         {
-            //btnSons.setComponent < Image > = on;
+            //Liga botao
+            btnSons.GetComponent<Image>().sprite = on;
+            this.sons = 1;
         }
-        else if(i == 1)
+        else if(this.sons == 1)
         {
+            //Desliga botao
+            btnSons.GetComponent<Image>().sprite = off;
+            this.sons = 0;
+        }
+    }
+
+    public void turnOnOffM()
+    {
+        //Se for zero está desligado e viceversa
+        if (this.musica == 0)
+        {
+            //Liga botao
+            btnMusica.GetComponent<Image>().sprite = on;
+            this.musica = 1;
+
+            Debug.Log(this.musica);
+        }
+        else if (this.musica == 1)
+        {
+            //Desliga botao
+            btnMusica.GetComponent<Image>().sprite = off;
+            this.musica = 0;
+
+            Debug.Log(this.musica);
 
         }
     }
 
-    public void turnOnOffM(int i)
+    public void turnOnOffD()
     {
         //Se for zero está desligado e viceversa
-        if (i == 0)
+        if (this.dicas == 0)
         {
-
+            //Liga botao
+            btnDicas.GetComponent<Image>().sprite = on;
+            this.dicas = 1;
         }
-        else if (i == 1)
+        else if (this.dicas == 1)
         {
-
-        }
-    }
-
-    public void turnOnOffD(int i)
-    {
-        //Se for zero está desligado e viceversa
-        if (i == 0)
-        {
-
-        }
-        else if (i == 1)
-        {
-
+            //Desliga botao
+            btnDicas.GetComponent<Image>().sprite = off;
+            this.dicas = 0;
         }
     }
 

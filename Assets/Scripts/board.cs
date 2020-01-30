@@ -86,6 +86,12 @@ public class board : MonoBehaviour
     public GameObject popup;
     public AudioSource source_;
     public AudioClip place_clip;
+
+    public int sons;
+    public int musica;
+    public int dicas;
+
+
     public int ColCount
     {
         get;
@@ -161,6 +167,16 @@ public class board : MonoBehaviour
 
         hand = hand.instance;
         tiraNovasPecas();
+
+        //Mostrar dicas
+        if(this.dicas == 1)
+        {
+            Txt_Dicas.enabled = true;
+        }
+        else if(this.dicas == 0)
+        {
+            Txt_Dicas.enabled = false;
+        }
     }
     // Update is called once per frame
     void Update()
@@ -265,7 +281,11 @@ public class board : MonoBehaviour
             getTilebyName("A");
             limpaAtualSelecionada();
             atualTexto("Muito Bem!");
-            this.source_.PlayOneShot(this.place_clip);
+
+            //Toca o audio caso esteja ligado
+            if (this.sons == 1) {
+                this.source_.PlayOneShot(this.place_clip);
+            }
         }   
 
     }
@@ -333,6 +353,12 @@ public class board : MonoBehaviour
         sendData(row, column, t.name);
         getTilebyName("A");
         limpaAtualSelecionada();
+
+        //Toca o audio caso esteja ligado
+        if (this.sons == 1)
+        {
+            this.source_.PlayOneShot(this.place_clip);
+        }
     }
 
     public bool isValidPlacement(tile t, int row, int column)
@@ -552,5 +578,16 @@ public class board : MonoBehaviour
         PlayerPrefs.SetInt("isWinner", i);
         PlayerPrefs.SetInt("points", this.pontos);
         PlayerPrefs.SetString("reason", this.endReason);
+
+        PlayerPrefs.SetInt("sons", this.sons);
+        PlayerPrefs.SetInt("musica", this.musica);
+        PlayerPrefs.SetInt("dicas", this.dicas);
+    }
+
+    void OnEnable()
+    {
+        this.sons = PlayerPrefs.GetInt("sons");
+        this.musica = PlayerPrefs.GetInt("musica");
+        this.dicas = PlayerPrefs.GetInt("dicas");
     }
 }

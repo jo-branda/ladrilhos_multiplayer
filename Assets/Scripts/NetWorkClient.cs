@@ -24,6 +24,9 @@ public class NetWorkClient : SocketIOComponent
 
     public AudioSource source_;
     public AudioClip notif_clip;
+
+    public int sons;
+
     public override void Start()
     {
         base.Start();
@@ -84,6 +87,11 @@ public class NetWorkClient : SocketIOComponent
             this.endReason = E.data["reason"].str;
         });
 
+
+        void OnEnable()
+        {
+            this.sons = PlayerPrefs.GetInt("sons");
+        }
 
     }
 
