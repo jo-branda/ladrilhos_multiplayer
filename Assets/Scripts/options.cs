@@ -8,10 +8,12 @@ public class options : MonoBehaviour
     private int sons;
     private int musica;
     private int dicas;
+    private string adress;
 
     public Button btnSons;
     public Button btnMusica;
     public Button btnDicas;
+    public InputField inputAdress;
 
     public Sprite on;
     public Sprite off;
@@ -100,12 +102,18 @@ public class options : MonoBehaviour
             this.dicas = 0;
         }
     }
+    public void updateAdress()
+    {
+        this.adress = inputAdress.text;
+        Debug.Log(this.adress);
+    }
 
     void OnEnable()
     {
         this.sons = PlayerPrefs.GetInt("sons");
         this.musica = PlayerPrefs.GetInt("musica");
         this.dicas = PlayerPrefs.GetInt("dicas");
+        this.adress = PlayerPrefs.GetString("Adress");
     }
 
     public void OnDisable()
@@ -113,6 +121,7 @@ public class options : MonoBehaviour
         PlayerPrefs.SetInt("sons", this.sons);
         PlayerPrefs.SetInt("musica", this.musica);
         PlayerPrefs.SetInt("dicas", this.dicas);
+        PlayerPrefs.SetString("Adress", this.adress);
     }
 
 }

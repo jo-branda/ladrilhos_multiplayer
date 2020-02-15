@@ -26,11 +26,14 @@ public class NetWorkClient : SocketIOComponent
     public AudioClip notif_clip;
 
     public int sons;
+    // IP FROM SERVER
+    public string adress = "127.0.0.1";
 
     public override void Start()
     {
         base.Start();
         setupEvents();
+        url = "ws://"+this.adress+":4567/socket.io/?EIO=4&transport=websocket";
     }
 
     private void setupEvents()
@@ -42,6 +45,7 @@ public class NetWorkClient : SocketIOComponent
              Emit("enter_pool", JSONObject.Create(""));
          });
 
+        // Receber informação de quem tem a vez de jogar
         On("turn", (E) =>
         {
             if (E.data["myTurn"].b == true)
@@ -59,6 +63,7 @@ public class NetWorkClient : SocketIOComponent
 
         });
 
+        // Receber o estado do tabuleiro, e atualizar o tabuleiro local
         On("board_state", (E) =>
         {
             InfoPeca _peca = new InfoPeca();
@@ -72,27 +77,31 @@ public class NetWorkClient : SocketIOComponent
             //this.pecas = JsonHelper.FromJson<InfoPeca>();
             Debug.Log("DATA----> " + _peca.tileType);
         });
+        
+        // Recebe os pontos atuais
         On("points", (E) =>
         {        
             this.myPoints = (int)E.data["points"].f;
         });
+
+        // Recebe a ronda atual
         On("round", (E) => {
             Debug.Log("Ronda"+E.data);
             this.currRound = (int)E.data["round"].f;
         });
+
+        // Recebe o sinal de final do jogo
         On("game_over", (E) => {
             Debug.Log(E.data);
             this.gameOver = true;
             this.Iswinner = E.data["winner"].b;
             this.endReason = E.data["reason"].str;
         });
-
-
-        void OnEnable()
-        {
-            this.sons = PlayerPrefs.GetInt("sons");
-        }
-
+    }
+    void OnEnable()
+    {
+        this.sons = PlayerPrefs.GetInt("sons");
+        this.adress = PlayerPrefs.GetString("Adress");
     }
 
     // Update is called once per frame
@@ -106,7 +115,7 @@ public class NetWorkClient : SocketIOComponent
         Close();
     }
 }
-
+// Classe Serializable, informação que podem ser transmitidas no servidor.
 [Serializable]
     public class InfoPeca
 {

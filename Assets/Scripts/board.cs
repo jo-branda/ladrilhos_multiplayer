@@ -92,6 +92,7 @@ public class board : MonoBehaviour
     public int dicas;
 
 
+
     public int ColCount
     {
         get;
@@ -111,6 +112,10 @@ public class board : MonoBehaviour
     public void clearBoard()
     {
         this._board = new tile[RowCount, ColCount];
+        foreach (Transform child in this.gameObject.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
     }
 
     private void Start()
@@ -230,6 +235,7 @@ public class board : MonoBehaviour
             Debug.LogError("Camera not Found");
             return;
         }
+        // Posição do Rato 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 25.0f, LayerMask.GetMask("Mapa")))
         {
@@ -259,6 +265,7 @@ public class board : MonoBehaviour
         }
     }
 
+    // ---------Colocar uma peça conforme as regras---------------------
     public void PlaceATile(tile t,int _x, int _y)
     {
         if (this.pecaSelecionada == A)
@@ -318,7 +325,7 @@ public class board : MonoBehaviour
         return t;
     }
 
-    // Colocar peça sem regras (Inicio do jogo)
+    // -------------Colocar peça sem regras (Inicio do jogo)----------------------
     public void Place (tile t, int row, int column)
     {
         if (this.pecaSelecionada == A)
@@ -360,7 +367,7 @@ public class board : MonoBehaviour
             this.source_.PlayOneShot(this.place_clip);
         }
     }
-
+    //----------------Posição valida?-----------------
     public bool isValidPlacement(tile t, int row, int column)
     {
         if (this.pecaSelecionada == A)
@@ -381,13 +388,17 @@ public class board : MonoBehaviour
             return false; // Is a piece in that position
         }
 
+
+        // --------------------Condições para ser uma posição válida-----------------------------
+
+
         bool possibleHorizontal = (!OffBoardPosition(row, column - 1) && t.IsCompatibleWith(_board[row, column - 1])) ||
                                   (!OffBoardPosition(row, column + 1) && t.IsCompatibleWith(_board[row, column + 1]));
 
         bool possibleVertical = (!OffBoardPosition(row - 1, column) && t.IsCompatibleWith(_board[row - 1, column])) ||
                                 (!OffBoardPosition(row + 1, column) && t.IsCompatibleWith(_board[row + 1, column]));
 
-
+        
 
         if (!possibleHorizontal && !possibleVertical)
         {
@@ -495,13 +506,15 @@ public class board : MonoBehaviour
     {
         popup.SetActive(false);
     }
-
+    //-------------- Enviar informação da peça jogada para o servidor ---------------------------
     public void sendData(int x, int y, string n)
     {
         InfoPeca newTile = new InfoPeca(x, y, n);
         nt.Emit("place_tile", new JSONObject(JsonUtility.ToJson(newTile)));
         //place_tile
-    }       
+    }
+    
+    // ----------------- Update das peças recebidas do servidor -----------------------------------
     public void updateBoard()
     {
         //Recebe board_state[]
@@ -510,7 +523,8 @@ public class board : MonoBehaviour
         int row;
         int column;
         string type;
-        // Para cada objecto json
+        this.clearBoard();
+        // Para cada objecto recebido em  json
         for (int i = 0; i < listPecas.Count; i++)
         {
             InfoPeca info = listPecas[i];
