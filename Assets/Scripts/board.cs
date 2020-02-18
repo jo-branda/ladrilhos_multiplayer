@@ -252,17 +252,16 @@ public class board : MonoBehaviour
 
     public void updateSelectedPiece()
     {
-        if (this.pecaSelecionada = null)
+        if (this.pecaSelecionada == null)
         {
             atualTexto("Escolha a peça");
+            this.pecaSelecionada = A;
         }
         else
         {
             this.pecaSelecionada = getTilebyName(hand.getSelectedCard());
-            //Debug.Log(this.pecaSelecionada);
-           
+            if (this.pecaSelecionada == null) return;
             this.Peca = pecaSelecionada.GetComponent<tile>();
-            //Debug.Log(Peca.Name);
         }
     }
 
