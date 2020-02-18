@@ -66,6 +66,7 @@ public class NetWorkClient : SocketIOComponent
         // Receber o estado do tabuleiro, e atualizar o tabuleiro local
         On("board_state", (E) =>
         {
+            this.tilesFromServer.Clear();
             InfoPeca _peca = new InfoPeca();
             for (int i = 0; i < E.data.Count; i++)
             {                

@@ -206,6 +206,7 @@ public class board : MonoBehaviour
         else
         {
             displayTurn("É a sua vez de jogar!");
+
         }
             
 
@@ -524,6 +525,7 @@ public class board : MonoBehaviour
         int column;
         string type;
         this.clearBoard();
+        Debug.Log(listPecas.Count);
         // Para cada objecto recebido em  json
         for (int i = 0; i < listPecas.Count; i++)
         {
@@ -532,13 +534,11 @@ public class board : MonoBehaviour
             column = info.y;
             type = info.tileType;
             t = getTilebyName(type);
-            if(_board[row,column] == null)
-            {
-                Vector3 position = new Vector3(row, 0, column) + new Vector3(-5.0f, 0, -5.0f) + new Vector3(0.5f, 0.05f, 0.5f);
-                GameObject newTile = Instantiate(t, position, Quaternion.identity) as GameObject;
-                newTile.transform.SetParent(transform);
-                _board[row, column] = t.GetComponent<tile>();
-            }
+            Vector3 position = new Vector3(row, 0, column) + new Vector3(-5.0f, 0, -5.0f) + new Vector3(0.5f, 0.05f, 0.5f);
+            GameObject newTile = Instantiate(t, position, Quaternion.identity) as GameObject;
+            newTile.transform.SetParent(transform);
+            _board[row, column] = t.GetComponent<tile>();
+
 
         }
     }
