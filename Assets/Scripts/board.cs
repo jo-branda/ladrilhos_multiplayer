@@ -460,16 +460,19 @@ public class board : MonoBehaviour
 
     public GameObject getTilebyName(string n)
     {
-        GameObject tile = A;
-        for (int i = 0; i < listaTiles.Count(); i++)
-        {
-            if (listaTiles[i].name == n)
-            {
-                tile = listaTiles[i];
-            }
+        //GameObject tile = A;
 
-        }
-        return tile;
+        //for (int i = 0; i < listaTiles.Count(); i++)
+        //{
+        //    if (listaTiles[i].name == n)
+        //    {
+        //        tile = listaTiles[i];
+        //    }
+
+        //}
+        //return tile;
+
+        return this.listaTiles.Find(tile => tile.name.Equals(n));
     }
 
     public void tiraNovasPecas()
@@ -534,12 +537,13 @@ public class board : MonoBehaviour
             column = info.y;
             type = info.tileType;
             t = getTilebyName(type);
+
+            if (t == null) return;
+
             Vector3 position = new Vector3(row, 0, column) + new Vector3(-5.0f, 0, -5.0f) + new Vector3(0.5f, 0.05f, 0.5f);
             GameObject newTile = Instantiate(t, position, Quaternion.identity) as GameObject;
             newTile.transform.SetParent(transform);
             _board[row, column] = t.GetComponent<tile>();
-
-
         }
     }
     public bool myTurn()
