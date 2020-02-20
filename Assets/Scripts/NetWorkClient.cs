@@ -67,16 +67,19 @@ public class NetWorkClient : SocketIOComponent
         On("board_state", (E) =>
         {
             this.tilesFromServer.Clear();
-            InfoPeca _peca = new InfoPeca();
+            
             for (int i = 0; i < E.data.Count; i++)
-            {                
+            {
+                InfoPeca _peca = new InfoPeca();
                 _peca.x = (int)E.data[i]["x"].f;
                 _peca.y = (int)E.data[i]["y"].f;
-                _peca.tileType = E.data[i]["tileType"].ToString().Trim('"'); ;
+                _peca.tileType = E.data[i]["tileType"].ToString().Trim('"');
+                Debug.Log(_peca.tileType);
                 tilesFromServer.Add(_peca);
             }
-            //this.pecas = JsonHelper.FromJson<InfoPeca>();
-            Debug.Log("DATA----> " + _peca.tileType);
+            //var pessas = JsonHelper.FromJson<InfoPeca>();
+            //Debug.Log("DATA----> " + _peca.tileType);
+            
         });
         
         // Recebe os pontos atuais

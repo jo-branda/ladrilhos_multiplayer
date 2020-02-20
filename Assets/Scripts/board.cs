@@ -75,6 +75,7 @@ public class board : MonoBehaviour
     private Vector3 boardOffset = new Vector3(5.0f, 0, 5.0f);
     private Vector3 tileOffset = new Vector3(0.5f, 0f, 0.5f);
     private GameObject pecaSelecionada;
+    private GameObject pecaAnterior;
     private tile Peca;
     public Text txt_Selecionada1;
     public Text txt_Selecionada2;
@@ -216,13 +217,15 @@ public class board : MonoBehaviour
             if (pecasJogadas.Count == 0 && nt.tilesFromServer.Count == 0)
             {
                 Place(Peca, _x, _y);
+                this.pecaSelecionada = null;
                 
                 
             }
             else
             {
                 PlaceATile(Peca, _x, _y);
-                
+                this.pecaSelecionada = null;
+
             }
 
 
@@ -355,7 +358,6 @@ public class board : MonoBehaviour
 
         Debug.Log("Colocou 1 peca");
         hand.Remove(pecaSelecionada);
-        //atualPontos(5);
         atualTexto("Adicione um azulejo da mesma cor ou forma que o anterior.");
         sendData(row, column, t.name);
         getTilebyName("A");
@@ -538,11 +540,12 @@ public class board : MonoBehaviour
             t = getTilebyName(type);
 
             if (t == null) return;
-
+            if (_board[row, column] == null) { 
             Vector3 position = new Vector3(row, 0, column) + new Vector3(-5.0f, 0, -5.0f) + new Vector3(0.5f, 0.05f, 0.5f);
             GameObject newTile = Instantiate(t, position, Quaternion.identity) as GameObject;
             newTile.transform.SetParent(transform);
             _board[row, column] = t.GetComponent<tile>();
+            }
         }
     }
     public bool myTurn()
