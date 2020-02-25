@@ -217,14 +217,14 @@ public class board : MonoBehaviour
             if (pecasJogadas.Count == 0 && nt.tilesFromServer.Count == 0)
             {
                 Place(Peca, _x, _y);
-                this.pecaSelecionada = null;
+                //this.pecaSelecionada = null;
                 
                 
             }
             else
             {
                 PlaceATile(Peca, _x, _y);
-                this.pecaSelecionada = null;
+               // this.pecaSelecionada = null;
 
             }
 
@@ -279,7 +279,7 @@ public class board : MonoBehaviour
 
         if (isValidPlacement(t, _x, _y))
         {
-            
+            sendData(_x, _y, t.name);
             Vector3 position = new Vector3(_x, 0, _y) + new Vector3(-5.0f,0,-5.0f) + new Vector3(0.5f, 0.05f, 0.5f);
             GameObject newTile = Instantiate(pecaSelecionada,position,Quaternion.identity) as GameObject;
             newTile.transform.SetParent(transform);
@@ -287,7 +287,6 @@ public class board : MonoBehaviour
             pecasJogadas.Add(t);
             hand.Remove(pecaSelecionada);
             atualTexto("Adicione um azulejo da mesma cor ou forma que o anterior.");
-            sendData(_x, _y, t.name);
             getTilebyName("A");
             limpaAtualSelecionada();
             atualTexto("Muito Bem!");
@@ -333,7 +332,7 @@ public class board : MonoBehaviour
     {
         if (this.pecaSelecionada == A)
         {
-            atualTexto("Selecione uma peça");
+            //atualTexto("Selecione uma peça");
             return;
         }
 
@@ -349,7 +348,7 @@ public class board : MonoBehaviour
             atualTexto("Já contém uma peça");
             return;
         }
-        
+        sendData(row, column, t.name);
         Vector3 position = new Vector3(row, 0, column)+ new Vector3(-5.0f, 0, -5.0f) + new Vector3(0.5f, 0.05f, 0.5f); ;
         GameObject newTile = Instantiate(pecaSelecionada, position, Quaternion.identity) as GameObject;
         newTile.transform.SetParent(transform);
@@ -359,7 +358,6 @@ public class board : MonoBehaviour
         Debug.Log("Colocou 1 peca");
         hand.Remove(pecaSelecionada);
         atualTexto("Adicione um azulejo da mesma cor ou forma que o anterior.");
-        sendData(row, column, t.name);
         getTilebyName("A");
         limpaAtualSelecionada();
 
@@ -374,7 +372,7 @@ public class board : MonoBehaviour
     {
         if (this.pecaSelecionada == A)
         {
-            atualTexto("Selecione uma peça");
+            //atualTexto("Selecione uma peça");
             return false;
         }
 
@@ -524,7 +522,7 @@ public class board : MonoBehaviour
     {
         //Recebe board_state[]
         List<InfoPeca> listPecas = nt.tilesFromServer;
-        GameObject t;
+
         int row;
         int column;
         string type;
@@ -533,6 +531,7 @@ public class board : MonoBehaviour
         // Para cada objecto recebido em  json
         for (int i = 0; i < listPecas.Count; i++)
         {
+            GameObject t;
             InfoPeca info = listPecas[i];
             row = info.x;
             column = info.y;
